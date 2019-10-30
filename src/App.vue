@@ -22,7 +22,7 @@
 <script>
     import Vue from "vue";
     import Vuetify, {
-        VApp, VAppBar, VToolbarTitle, VSpacer, VBtn, VCard, VRow, VCol, VContainer, VContent
+        VApp, VAppBar, VToolbarTitle, VSpacer, VBtn, VCard, VRow, VCol, VContainer, VContent, VLayout
     } from 'vuetify/lib';
 
     Vue.use(Vuetify, {
@@ -32,7 +32,7 @@
             VToolbarTitle,
             VSpacer,
             VBtn,
-            VCard, VRow, VCol, VContainer, VContent
+            VCard, VRow, VCol, VContainer, VContent, VLayout
         },
     });
     export default {
