@@ -1,14 +1,16 @@
 <template>
     <div>
         <div>
-            this be my profile
+            profile
+        </div>
+        <div>
             {{user}}
         </div>
     </div>
 </template>
 
 <script>
-    import axios from "axios";
+    import axios from "axios/index";
     export default {
         name: "Profile",
         data: () => ({

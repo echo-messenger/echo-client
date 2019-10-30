@@ -1,0 +1,9 @@
+<template>
+    <div>conversations</div>
+</template>
+
+<script>
+    export default {
+        name: "Conversations",
+    }
+</script>

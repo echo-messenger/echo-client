@@ -51,16 +51,3 @@
         }
     }
 </script>
-
-<style>
-    .top-bar {
-        display: flex;
-        align-items: center;
-        /*justify-content: space-between;*/
-        background-color: #f3b79a;
-        height: 110px;
-        padding: 10px;
-    }
-
-
-</style>

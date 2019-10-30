@@ -22,17 +22,18 @@
 <script>
     import Vue from "vue";
     import Vuetify, {
-        VApp, VAppBar, VToolbarTitle, VSpacer, VBtn, VCard, VRow, VCol, VContainer, VContent, VLayout
+        VApp, VAppBar, VToolbarTitle, VSpacer, VBtn, VCard, VRow, VCol,
+        VContainer, VContent, VLayout, VNavigationDrawer, VListItem, VListItemAvatar,
+        VListItemTitle, VDivider, VListItemContent, VHover
     } from 'vuetify/lib';
 
     Vue.use(Vuetify, {
         components: {
-            VApp,
-            VAppBar,
-            VToolbarTitle,
-            VSpacer,
-            VBtn,
-            VCard, VRow, VCol, VContainer, VContent, VLayout
+            VApp, VAppBar, VToolbarTitle, VSpacer, VBtn,
+            VCard, VRow, VCol, VContainer, VContent, VLayout,
+            VNavigationDrawer, VListItem, VListItemAvatar,
+            VListItemTitle, VDivider, VListItemContent, VHover,
+
         },
     });
     export default {
