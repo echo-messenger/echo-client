@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import SignIn from '../views/SignIn.vue'
+import SignUp from '../views/SignUp.vue'
 import Dashboard from '../views/Dashboard'
 import Profile from '../components/Profile'
 import Conversations from '../components/Conversations'
+import Messages from '../components/Messages'
+import NewMessage from '../components/NewMessage'
 import Contacts from '../components/Contacts'
 
 Vue.use(VueRouter)
@@ -13,6 +17,16 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/sign-in',
+        name: 'sign-in',
+        component: SignIn
+    },
+    {
+        path: '/sign-up',
+        name: 'sign-up',
+        component: SignUp
     },
     {
         path: '/about',
@@ -30,7 +44,19 @@ const routes = [
             {
                 path: '/dashboard/conversations',
                 name: 'conversations',
-                component: Conversations
+                component: Conversations,
+                children: [
+                    {
+                        path: '/dashboard/conversations/compose-message',
+                        name: 'compose-message',
+                        component: NewMessage
+                    },
+                    {
+                        path: '/dashboard/conversations/messages/:conversationid',
+                        name: 'messages',
+                        component: Messages
+                    }
+                ]
             },
             {
                 path: '/dashboard/profile',

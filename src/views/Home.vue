@@ -27,7 +27,7 @@
                     </v-row>
                     <v-row style="padding-top: 10%">
                         <v-btn color="#f3b79a">
-                            <router-link to="/dashboard/messages" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">
+                            <router-link to="/sign-in" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">
                                 Get Started
                             </router-link>
                         </v-btn>
@@ -42,12 +42,18 @@
 </template>
 
 <script>
+    import router from '../router';
     export default {
         name: "Home",
         data: () => ({}),
         methods: {},
         created() {
-
+            if (this.$cookies.get("userId")) {
+                console.log("already logged in");
+                router.replace('/dashboard')
+            } else {
+                console.log("not logged in");
+            }
         }
     }
 </script>

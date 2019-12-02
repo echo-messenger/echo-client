@@ -24,7 +24,7 @@
     import Vuetify, {
         VApp, VAppBar, VToolbarTitle, VSpacer, VBtn, VCard, VRow, VCol,
         VContainer, VContent, VLayout, VNavigationDrawer, VListItem, VListItemAvatar,
-        VListItemTitle, VDivider, VListItemContent, VHover
+        VListItemTitle, VDivider, VListItemContent, VTextField
     } from 'vuetify/lib';
 
     Vue.use(Vuetify, {
@@ -32,7 +32,7 @@
             VApp, VAppBar, VToolbarTitle, VSpacer, VBtn,
             VCard, VRow, VCol, VContainer, VContent, VLayout,
             VNavigationDrawer, VListItem, VListItemAvatar,
-            VListItemTitle, VDivider, VListItemContent, VHover,
+            VListItemTitle, VDivider, VListItemContent, VTextField,
 
         },
     });
