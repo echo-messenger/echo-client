@@ -70,12 +70,13 @@
                 axios.post("http://localhost:8082/user", {
                     "firstName": this.firstName,
                     "lastName": this.lastName,
-                    "email": this.email
+                    "email": this.email,
+                    "plainPassword": this.password
                 }).then((response) => {
                     console.log(
                         "new user: " + JSON.stringify(response.data)
                     );
-                    router.replace('/dashboard')
+                    router.replace('/dashboard/conversations')
                 }).catch(() => {
                     console.log("user creation error");
                 });

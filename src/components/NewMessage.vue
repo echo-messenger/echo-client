@@ -19,6 +19,7 @@
 <script>
     import axios from "axios/index";
     import router from '../router';
+
     export default {
         name: "NewMessage",
         data: () => ({
@@ -51,9 +52,7 @@
                     let users = this.selection.slice();
                     users.push({text: this.firstName + " " + this.lastName, value: this.userId});
                     let res = this.doesConversationExist(users);
-                    if (res !== null) {
-                        router.replace('/dashboard/conversations/messages/' + res)
-                    } else {
+                    if (res == null) {
                         let name = "";
                         for (let i = 0; i < users.length; i++) {
                             name += users[i].text;
@@ -83,14 +82,18 @@
                                         console.log("inbox addition error");
                                     });
                                 });
+                                router.replace('/dashboard/conversations/messages/' + this.convId)
                             }
                             this.convId = "";
                         }).then(() => {
-                                this.$root.$emit('added conversation');
+                            this.$root.$emit('conversation updated');
                             }
                         ).catch(() => {
                             console.log("create conversation error");
                         });
+                    } else {
+                        console.log("This conversation already exists");
+                        router.replace('/dashboard/conversations/messages/' + res)
                     }
                 }
             },
@@ -99,7 +102,7 @@
                 axios.post("http://localhost:8082/existing-conversation", {
                     userIds: users,
                 }).then((response) => {
-                    console.log(response.data)
+                    console.log(response.data);
                     return response.data;
                 }).catch(() => {
                     console.log("");

@@ -1,22 +1,7 @@
 <template>
     <v-app>
-        <!--    <v-app-bar app>-->
-        <!--      <v-toolbar-title class="headline text-uppercase">-->
-        <!--        <span>Vuetify</span>-->
-        <!--        <span class="font-weight-light">MATERIAL DESIGN</span>-->
-        <!--      </v-toolbar-title>-->
-        <!--      <v-spacer></v-spacer>-->
-        <!--      <v-btn-->
-        <!--        text-->
-        <!--        href="https://github.com/vuetifyjs/vuetify/releases/latest"-->
-        <!--        target="_blank"-->
-        <!--      >-->
-        <!--        <span class="mr-2">Latest Release</span>-->
-        <!--      </v-btn>-->
-        <!--    </v-app-bar>-->
         <router-view></router-view>
     </v-app>
-    <!--  <router-view></router-view>-->
 </template>
 
 <script>
@@ -26,6 +11,8 @@
         VContainer, VContent, VLayout, VNavigationDrawer, VListItem, VListItemAvatar,
         VListItemTitle, VDivider, VListItemContent, VTextField
     } from 'vuetify/lib';
+    import VueChatScroll from "vue-chat-scroll";
+
 
     Vue.use(Vuetify, {
         components: {
@@ -36,10 +23,24 @@
 
         },
     });
+    Vue.use(VueChatScroll);
     export default {
         name: 'App',
         data: () => ({
-            //
+
         }),
+        created() {
+
+        }
     };
 </script>
+
+<style>
+    html {
+        width: 100%;
+        height: 100%;
+        clip: auto;
+        position: absolute;
+        overflow: hidden;
+    }
+</style>

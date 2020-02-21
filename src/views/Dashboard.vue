@@ -8,9 +8,9 @@
         >
             <v-list-item>
                 <v-list-item-avatar @click.stop="mini = !mini">
-                    <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+                    <v-img src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png"></v-img>
                 </v-list-item-avatar>
-                <v-list-item-title>John Smith</v-list-item-title>
+                <v-list-item-title>{{user.firstName}} {{user.lastName}}</v-list-item-title>
                 <v-btn icon @click.stop="mini = !mini">
                     <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+    import axios from "axios/index";
 
     export default {
         name: "Dashboard",
@@ -72,15 +73,38 @@
             return {
                 drawer: true,
                 mini: true,
+                user: {},
             }
         },
         methods: {
             logout() {
                 this.$cookies.remove('userId');
-            }
+            },
+            getUser() {
+                let userId = this.$cookies.get('userId');
+                axios
+                    .get("http://localhost:8082/user/" + userId)
+                    .then((response) => {
+                        this.user = response.data;
+                        this.$emit("success");
+                    })
+                    .catch(() => {
+                    });
+            },
         },
         created() {
-
+            this.getUser();
+        },
+        mounted() {
+            this.$root.$on("profile updated", () => {
+                this.getUser();
+            })
         }
     }
 </script>
+
+<style>
+    .no-scroll {
+        overflow: hidden;
+    }
+</style>

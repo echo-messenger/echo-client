@@ -1,7 +1,8 @@
 <template>
     <v-container>
         <v-row>
-            <v-col>
+            <v-col class="message-prevs">
+                <div>
                 <v-row>
                     <v-col>
                         <div>Conversations</div>
@@ -13,17 +14,16 @@
                     </v-col>
                 </v-row>
                 <v-row v-for="(conv, index) in inbox" v-bind:key="index">
-<!--                    <router-link-->
-<!--                            v-on:click="changeConversation(conv.conversationId)"-->
-<!--                            :to="{ name: 'messages', params: { conversationid: conv.conversationId } }"-->
-<!--                            style="text-decoration: none">-->
-<!--                        {{ conv.name }}-->
-<!--                    </router-link>-->
-                    <div v-on:click="changeConversation(conv.conversationId)">
-                        {{ conv.name }}
-                    </div>
+                    <v-list-item v-on:click="changeConversation(conv.conversationId)">
+                        <v-list-item-content>
+                            <v-list-item-title>{{ conv.name }}</v-list-item-title>
+                            <v-divider></v-divider>
+                        </v-list-item-content>
+                    </v-list-item>
                 </v-row>
+                </div>
             </v-col>
+            <v-divider style="min-height: 600px" vertical></v-divider>
             <v-col>
                 <router-view></router-view>
             </v-col>
@@ -34,6 +34,7 @@
 <script>
     import axios from "axios/index";
     import router from '../router';
+
     export default {
         name: "Conversations",
         data: () => ({
@@ -61,17 +62,24 @@
                     this.$root.$emit('changed conversation');
                     conversationId = res;
                 }
-            }
+            },
         },
         created() {
             this.userId = this.$cookies.get("userId");
             this.getInbox();
         },
         mounted() {
-            this.$root.$on("added conversation", () => {
+            this.$root.$on("conversation updated", () => {
                 console.log("received message");
                 this.getInbox();
             })
         }
     }
 </script>
+
+<style>
+    .message-prevs {
+        max-width: 25%;
+        min-width: 25%;
+    }
+</style>

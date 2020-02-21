@@ -4,45 +4,41 @@
             <v-row>
                 <v-col align="center">
                     <v-list-item-avatar size="200px">
-                        <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+                        <v-img src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png"></v-img>
                     </v-list-item-avatar>
                     <v-layout justify-center>
                         <v-simple-table align-self="center">
-                            <tr>
+                            <tr v-if="!editNameF">
                                 <td>Name:</td>
                                 <td>{{firstName}} {{lastName}}</td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
+                                <td><v-btn outlined small v-on:click="editName">Edit</v-btn></td>
                             </tr>
-                            <tr>
+                            <tr v-else>
+                                <td>Name:</td>
+                                <td><v-text-field v-model="firstName"></v-text-field></td>
+                                <td><v-text-field v-model="lastName"></v-text-field></td>
+                                <td><v-btn outlined small v-on:click="saveName">Save</v-btn></td>
+                            </tr>
+                            <tr v-if="!editEmailF">
                                 <td>Email:</td>
                                 <td>{{email}}</td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
+                                <td><v-btn outlined small v-on:click="editEmail">Edit</v-btn></td>
                             </tr>
-                            <tr>
-                                <td>Password:</td>
-                                <td>************</td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
-                            </tr>
-
-
-                            <tr>
-                                <td>Name:</td>
-                                <td>
-                                    <v-text-field v-model="firstName"></v-text-field>
-                                    <v-text-field v-model="lastName"></v-text-field>
-                                </td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
-                            </tr>
-                            <tr>
+                            <tr v-else>
                                 <td>Email:</td>
                                 <td> <v-text-field v-model="email"></v-text-field></td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
+                                <td><v-btn outlined small v-on:click="saveEmail">Save</v-btn></td>
                             </tr>
-                            <tr>
-                                <td>Password:</td>
-                                <td><v-text-field v-model="password"></v-text-field></td>
-                                <td><v-btn outlined small>Edit</v-btn></td>
-                            </tr>
+<!--                            <tr v-if="!editPasswordF">-->
+<!--                                <td>Password:</td>-->
+<!--                                <td>************</td>-->
+<!--                                <td><v-btn outlined small v-on:click="editPassword">Edit</v-btn></td>-->
+<!--                            </tr>-->
+<!--                            <tr v-else>-->
+<!--                                <td>Password:</td>-->
+<!--                                <td><v-text-field v-model="password"></v-text-field></td>-->
+<!--                                <td><v-btn outlined small v-on:click="savePassword">Save</v-btn></td>-->
+<!--                            </tr>-->
                         </v-simple-table>
                     </v-layout>
                 </v-col>
@@ -61,7 +57,10 @@
             firstName: "",
             lastName: "",
             email:"",
-            password: ""
+            password: "",
+            editNameF: false,
+            editEmailF: false,
+            editPasswordF: false,
         }),
         methods: {
             getUser() {
@@ -79,6 +78,51 @@
                     .catch(() => {
                     });
             },
+            saveName () {
+                this.editName();
+                axios.put("http://localhost:8082/user/" + this.user.id, {
+                    "userId": this.user.id,
+                    "firstName": this.firstName,
+                    "lastName": this.lastName,
+                    "email": this.user.email
+                }).then((response) => {
+                    console.log(
+                        "[Profile.vue] changed name " + JSON.stringify(response.data)
+                    );
+                    this.$root.$emit('profile updated');
+                }).catch(() => {
+                    console.log("save name error");
+                });
+            },
+            saveEmail () {
+                this.editEmail();
+                axios.put("http://localhost:8082/user/" + this.user.id, {
+                    userId: this.user.id,
+                    firstName: this.user.firstName,
+                    lastName: this.user.lastName,
+                    email: this.email
+                }).then((response) => {
+                    console.log(
+                        "[Profile.vue] changed email " + JSON.stringify(response.data)
+                    );
+                    this.$root.$emit('profile updated');
+                }).catch(() => {
+                    console.log("save email error");
+                });
+            },
+            savePassword () {
+                this.editPassword();
+                // TODO
+            },
+            editName() {
+                this.editNameF = !this.editNameF;
+            },
+            editEmail() {
+                this.editEmailF = !this.editEmailF;
+            },
+            editPassword() {
+                this.editPasswordF = !this.editPasswordF;
+            }
         },
         created() {
             this.user = this.getUser()

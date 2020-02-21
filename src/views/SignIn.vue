@@ -63,19 +63,22 @@
         }),
         methods: {
             signIn() {
-                axios.post("http://localhost:8082/signin", {
-                    "email": this.email,
-                    "password": this.password
-                }).then((response) => {
-                    console.log("signed in: " + JSON.stringify(response.data));
-                    if (response.data !== null)
-                        this.$cookies.set("userId", response.data.id);
-                        this.$cookies.set("firstName", response.data.firstName);
-                        this.$cookies.set("lastName", response.data.lastName);
-                        router.replace('/dashboard')
-                }).catch(() => {
+                if (this.email !== "" && this.password !== "") {
+                    axios.post("http://localhost:8082/signin", {
+                        "email": this.email,
+                        "plainPassword": this.password
+                    }).then((response) => {
+                        if (response.data !== "") {
+                            console.log("signed in: " + JSON.stringify(response.data));
+                            this.$cookies.set("userId", response.data.id);
+                            this.$cookies.set("firstName", response.data.firstName);
+                            this.$cookies.set("lastName", response.data.lastName);
+                            router.replace('/dashboard/conversations')
+                        }
+                    }).catch(() => {
 
-                })
+                    })
+                }
             }
         },
         created() {

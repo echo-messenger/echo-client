@@ -9,8 +9,10 @@ import Conversations from '../components/Conversations'
 import Messages from '../components/Messages'
 import NewMessage from '../components/NewMessage'
 import Contacts from '../components/Contacts'
+import ContactCard from '../components/ContactCard'
+import NewContact from '../components/NewContact'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     {
@@ -66,7 +68,19 @@ const routes = [
             {
                 path: '/dashboard/contacts',
                 name: 'contacts',
-                component: Contacts
+                component: Contacts,
+                children: [
+                    {
+                        path: '/dashboard/contacts/add-contact',
+                        name: 'add-contact',
+                        component: NewContact
+                    },
+                    {
+                        path: '/dashboard/contacts/:contactId',
+                        name: 'contactcard',
+                        component: ContactCard
+                    }
+                ]
             }
         ]
     },
