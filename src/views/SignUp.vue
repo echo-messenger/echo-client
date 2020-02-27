@@ -23,14 +23,14 @@
                         </p>
                     </v-row>
                     <v-row style="padding-top: 10%">
-                        <v-text-field v-model="firstName" placeholder="First Name"></v-text-field>
-                        <v-text-field v-model="lastName" placeholder="Last Name"></v-text-field>
+                        <v-text-field v-model="firstName" :hint="firstNameError" persistent-hint placeholder="First Name"></v-text-field>
+                        <v-text-field v-model="lastName" :hint="lastNameError" persistent-hint placeholder="Last Name"></v-text-field>
                     </v-row>
                     <v-row>
-                        <v-text-field v-model="email" placeholder="Email Address"></v-text-field>
+                        <v-text-field v-model="email" :hint="emailError" persistent-hint placeholder="Email Address"></v-text-field>
                     </v-row>
                     <v-row>
-                        <v-text-field v-model="password" type="password" placeholder="Password"></v-text-field>
+                        <v-text-field v-model="password" :hint="passwordError" persistent-hint type="password" placeholder="Password"></v-text-field>
                     </v-row>
                     <v-row style="padding-top: 5%">
                         <v-btn color="#f3b79a" v-on:click="createAccount">
@@ -60,10 +60,18 @@
             firstName: "",
             lastName: "",
             email: "",
-            password: ""
+            password: "",
+            firstNameError: "",
+            lastNameError: "",
+            emailError: "",
+            passwordError: "",
         }),
         methods: {
             createAccount() {
+                this.firstNameError = this.firstName === "" ? "Required" : "";
+                this.lastNameError = this.lastName === "" ? "Required" : "";
+                this.emailError = this.email === "" ? "Required" : "";
+                this.passwordError = this.password === "" ? "Required" : "";
                 if (this.firstName === "" || this.lastName === "" || this.email === "" || this.password === "") {
                     return;
                 }
