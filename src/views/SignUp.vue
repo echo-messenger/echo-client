@@ -77,6 +77,9 @@
                     console.log(
                         "new user: " + JSON.stringify(response.data)
                     );
+                    this.$cookies.set("userId", response.data.id);
+                    this.$cookies.set("firstName", response.data.firstName);
+                    this.$cookies.set("lastName", response.data.lastName);
                     router.replace('/dashboard/conversations')
                 }).catch(() => {
                     console.log("user creation error");
