@@ -8,9 +8,6 @@
             <v-btn text>
                 <router-link to="/" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">Home</router-link>
             </v-btn>
-            <v-btn text>
-                <router-link to="/about" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">About</router-link>
-            </v-btn>
         </v-app-bar>
         <v-content>
             <v-row style="padding-left: 15%" wrap>
@@ -33,7 +30,7 @@
                         <v-text-field v-model="email" placeholder="Email Address"></v-text-field>
                     </v-row>
                     <v-row>
-                        <v-text-field v-model="password" placeholder="Password"></v-text-field>
+                        <v-text-field v-model="password" type="password" placeholder="Password"></v-text-field>
                     </v-row>
                     <v-row style="padding-top: 5%">
                         <v-btn color="#f3b79a" v-on:click="createAccount">
@@ -47,7 +44,7 @@
                     </v-row>
                 </v-col>
                 <v-col style="padding-top: 5%">
-                    <img src="../assets/laptop.png" height="70%"/>
+                    <img src="../assets/laptop.png" style="height: 500px; padding-right: 100px"/>
                 </v-col>
             </v-row>
         </v-content>
@@ -67,11 +64,15 @@
         }),
         methods: {
             createAccount() {
-                axios.post("http://localhost:8082/user", {
+                if (this.firstName === "" || this.lastName === "" || this.email === "" || this.password === "") {
+                    return;
+                }
+                axios.post("https://echo-servlet.herokuapp.com/user", {
                     "firstName": this.firstName,
                     "lastName": this.lastName,
                     "email": this.email,
-                    "plainPassword": this.password
+                    "plainPassword": this.password,
+                    "profilePicture": "https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png"
                 }).then((response) => {
                     console.log(
                         "new user: " + JSON.stringify(response.data)

@@ -12,16 +12,18 @@
                         </router-link>
                     </v-col>
                 </v-row>
-                <v-row v-for="(contact, index) in contacts" v-bind:key="index">
-                    <v-list-item v-on:click="changeContact(contact.id)">
-                        <v-list-item-content>
-                            <v-list-item-title>{{ contact.firstName }}</v-list-item-title>
-                            <v-divider></v-divider>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-row>
+                <div class="contacts_list">
+                    <v-row v-for="(contact, index) in contacts" v-bind:key="index">
+                        <v-list-item v-on:click="changeContact(contact.id)">
+                            <v-list-item-content>
+                                <v-list-item-title>{{ contact.firstName }}</v-list-item-title>
+                                <v-divider></v-divider>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-row>
+                </div>
             </v-col>
-            <v-divider vertical></v-divider>
+            <v-divider style="min-height: 600px" vertical></v-divider>
             <v-col>
                 <router-view></router-view>
             </v-col>
@@ -36,14 +38,135 @@
     export default {
         name: "Contacts",
         data: () => ({
-            contacts: [],
+            contacts: [
+                {
+                    "id": "-1224066212",
+                    "firstName": "shan",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "spence",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "emma",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "emily",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "ben",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "mom",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "dad",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "po",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "leslie",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "tom",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "ron",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "andy",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "donna",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "april",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+                {
+                    "id": "-1224066212",
+                    "firstName": "chris",
+                    "lastName": "mar",
+                    "email": "shan@mar.com",
+                    "hashedPassword": "1234",
+                    "profilePicture": null
+                },
+            ],
             userId: ""
         }),
         methods: {
-            getInbox() {
-                axios.get("http://localhost:8082/contacts/" + this.userId)
+            getContacts() {
+                axios.get("https://echo-servlet.herokuapp.com/contacts/" + this.userId)
                     .then((response) => {
-                        this.contacts = response.data;
+                        // this.contacts = response.data;
                         this.$emit("success");
                         console.log(
                             "[Contacts.vue] retrieved contacts" + JSON.stringify(response.data)
@@ -64,13 +187,27 @@
         },
         created() {
             this.userId = this.$cookies.get("userId");
-            this.getInbox();
+            this.getContacts();
         },
         mounted() {
             this.$root.$on("contacts updated", () => {
                 console.log("received message");
-                this.getInbox();
+                this.getContacts();
             })
         }
     }
 </script>
+
+<style>
+    .contacts_list {
+        /*align-self: center;*/
+        position: fixed;
+        min-height: 80%;
+        max-height: 80%;
+        min-width: 30%;
+        max-width: 30%;
+        padding: 10px;
+        overflow-y: scroll;
+        /*border-top: solid gray .5px;*/
+    }
+</style>

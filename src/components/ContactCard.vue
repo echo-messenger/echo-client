@@ -27,7 +27,7 @@
         methods: {
             getContact() {
                 this.contactId = this.$route.params.contactId;
-                axios.get("http://localhost:8082/user/" + this.contactId)
+                axios.get("https://echo-servlet.herokuapp.com/user/" + this.contactId)
                     .then((response) => {
                         this.contact = response.data;
                         console.log(JSON.stringify(this.contact))

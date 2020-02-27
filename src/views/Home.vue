@@ -8,12 +8,9 @@
             <v-btn text>
                <router-link to="/" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">Home</router-link>
             </v-btn>
-            <v-btn text>
-                <router-link to="/about" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">About</router-link>
-            </v-btn>
         </v-app-bar>
         <v-content>
-            <v-row style="padding-left: 15%" wrap>
+            <v-row cols=2 style="padding-left: 15%" wrap>
                 <v-col style="padding-top: 7%">
                     <v-row>
                         <h1 class="display-4 font-weight-thin">
@@ -26,15 +23,15 @@
                         </p>
                     </v-row>
                     <v-row style="padding-top: 10%">
-                        <v-btn color="#f3b79a">
-                            <router-link to="/sign-in" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">
+                        <v-btn color="#f3b79a" v-on:click="goToSignIn">
+                            <div style="color: white; text-decoration: none; font-weight: bold; padding: 10px">
                                 Get Started
-                            </router-link>
+                            </div>
                         </v-btn>
                     </v-row>
                 </v-col>
                 <v-col style="padding-top: 5%">
-                    <img src="../assets/laptop.png" height="70%"/>
+                    <img src="../assets/laptop.png" style="height: 500px; padding-right: 100px"/>
                 </v-col>
             </v-row>
         </v-content>
@@ -46,7 +43,11 @@
     export default {
         name: "Home",
         data: () => ({}),
-        methods: {},
+        methods: {
+            goToSignIn() {
+                router.replace('/sign-in')
+            },
+        },
         created() {
             if (this.$cookies.get("userId")) {
                 console.log("already logged in");

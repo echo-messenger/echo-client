@@ -8,7 +8,7 @@
         >
             <v-list-item>
                 <v-list-item-avatar @click.stop="mini = !mini">
-                    <v-img src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/user.png"></v-img>
+                    <v-img :src=user.profilePicture></v-img>
                 </v-list-item-avatar>
                 <v-list-item-title>{{user.firstName}} {{user.lastName}}</v-list-item-title>
                 <v-btn icon @click.stop="mini = !mini">
@@ -83,7 +83,7 @@
             getUser() {
                 let userId = this.$cookies.get('userId');
                 axios
-                    .get("http://localhost:8082/user/" + userId)
+                    .get("https://echo-servlet.herokuapp.com/user/" + userId)
                     .then((response) => {
                         this.user = response.data;
                         this.$emit("success");

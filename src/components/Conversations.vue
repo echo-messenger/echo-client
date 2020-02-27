@@ -43,7 +43,7 @@
         }),
         methods: {
             getInbox() {
-                axios.get("http://localhost:8082/inboxes/" + this.userId)
+                axios.get("https://echo-servlet.herokuapp.com/inboxes/" + this.userId)
                     .then((response) => {
                         this.inbox = response.data;
                         this.$emit("success");

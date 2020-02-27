@@ -6,10 +6,8 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn text>
-                <router-link to="/" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">Home</router-link>
-            </v-btn>
-            <v-btn text>
-                <router-link to="/about" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">About</router-link>
+                <router-link to="/" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">Home
+                </router-link>
             </v-btn>
         </v-app-bar>
         <v-content>
@@ -26,16 +24,16 @@
                         </p>
                     </v-row>
                     <v-row style="padding-top: 10%">
-                        <v-text-field v-model="email" placeholder="Email Address"></v-text-field>
+                        <v-text-field v-model="email" :hint="emailError" persistent-hint
+                                      placeholder="Email Address"></v-text-field>
                     </v-row>
                     <v-row>
-                        <v-text-field v-model="password" placeholder="Password"></v-text-field>
+                        <v-text-field v-model="password" :hint="passwordError" persistent-hint type="password"
+                                      placeholder="Password"></v-text-field>
                     </v-row>
                     <v-row style="padding-top: 5%">
                         <v-btn color="#f3b79a" v-on:click="signIn">
-<!--                            <router-link to="/dashboard" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">-->
-                                Sign In
-<!--                            </router-link>-->
+                            Sign In
                         </v-btn>
                     </v-row>
                     <v-row style="padding-top: 10%">
@@ -45,7 +43,7 @@
                     </v-row>
                 </v-col>
                 <v-col style="padding-top: 5%">
-                    <img src="../assets/laptop.png" height="70%"/>
+                    <img src="../assets/laptop.png" style="height: 500px; padding-right: 100px"/>
                 </v-col>
             </v-row>
         </v-content>
@@ -55,34 +53,74 @@
 <script>
     import router from '../router';
     import axios from "axios/index";
+
     export default {
         name: "SignIn",
         data: () => ({
             email: "",
-            password: ""
+            password: "",
+            emailMissing: false,
+            passwordMissing: false,
+            wrongEmail: false,
+            wrongPassword: false,
+            emailError: "",
+            passwordError: ""
         }),
         methods: {
-            signIn() {
-                if (this.email !== "" && this.password !== "") {
-                    axios.post("http://localhost:8082/signin", {
-                        "email": this.email,
-                        "plainPassword": this.password
-                    }).then((response) => {
-                        if (response.data !== "") {
-                            console.log("signed in: " + JSON.stringify(response.data));
-                            this.$cookies.set("userId", response.data.id);
-                            this.$cookies.set("firstName", response.data.firstName);
-                            this.$cookies.set("lastName", response.data.lastName);
-                            router.replace('/dashboard/conversations')
+            checkEmailExists() {
+                axios.get("https://echo-servlet.herokuapp.com/userE/" + this.email)
+                    .then((res) => {
+                        // console.log("res: " + JSON.stringify(res.data))
+                        if (res.data === "") {
+                            this.wrongEmail = true;
+                            this.emailError = "No user found with this email";
+                            return;
                         }
+                        this.wrongEmail = false;
+                        this.emailError = "";
                     }).catch(() => {
+                    this.wrongEmail = true;
+                    this.emailError = "No user found with this email";
+                })
+            },
+            signIn() {
+                this.emailMissing = this.email === "";
+                this.emailError = this.email === "" ? "Required" : "";
+                if (this.emailMissing) return;
 
-                    })
-                }
+                this.passwordMissing = this.password === "";
+                this.passwordError = this.password === "" ? "Required" : "";
+                if (this.passwordMissing) return;
+
+                this.checkEmailExists();
+                if (this.wrongEmail) return;
+
+
+                axios.post("https://echo-servlet.herokuapp.com/signin", {
+                    "email": this.email,
+                    "plainPassword": this.password
+                }).then((response) => {
+                    if (response.data !== "") {
+                        console.log("signed in: " + JSON.stringify(response.data));
+                        this.$cookies.set("userId", response.data.id);
+                        this.$cookies.set("firstName", response.data.firstName);
+                        this.$cookies.set("lastName", response.data.lastName);
+                        router.replace('/dashboard/conversations')
+                    } else {
+                        this.passwordError = "Password is incorrect"
+                    }
+                }).catch(() => {
+
+                })
             }
+
         },
         created() {
 
         }
     }
 </script>
+
+<style>
+
+</style>

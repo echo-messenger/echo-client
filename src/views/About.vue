@@ -9,11 +9,6 @@
                 <router-link to="/" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">Home
                 </router-link>
             </v-btn>
-            <v-btn text>
-                <router-link to="/about" style="color: white; text-decoration: none; font-weight: bold; padding: 10px">
-                    About
-                </router-link>
-            </v-btn>
         </v-app-bar>
         <v-content>
             <h1>This is an About page!</h1>

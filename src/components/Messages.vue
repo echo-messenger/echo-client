@@ -73,7 +73,7 @@
         methods: {
             getConversation() {
                 this.conversationId = this.$route.params.conversationid;
-                axios.get("http://localhost:8082/conversation/" + this.conversationId)
+                axios.get("https://echo-servlet.herokuapp.com/conversation/" + this.conversationId)
                     .then((response) => {
                         this.conversation = response.data;
                         this.name = this.conversation.name;
@@ -82,7 +82,7 @@
                 });
             },
             rename() {
-                axios.put("http://localhost:8082/conversation/" + this.conversationId, {
+                axios.put("https://echo-servlet.herokuapp.com/conversation/" + this.conversationId, {
                     id: this.conversationId,
                     name: this.name
                 }).then((response) => {
@@ -93,7 +93,7 @@
                 });
             },
             getMessages() {
-                axios.get("http://localhost:8082/messages/" + this.conversationId)
+                axios.get("https://echo-servlet.herokuapp.com/messages/" + this.conversationId)
                     .then((response) => {
                         this.messages = response.data;
                     }).catch(() => {
@@ -116,7 +116,7 @@
                 }
             },
             connect() {
-                this.socket = new SockJS("http://localhost:8082/gs-guide-websocket/");
+                this.socket = new SockJS("https://echo-servlet.herokuapp.com/gs-guide-websocket/");
 
                 this.stompClient = Stomp.over(this.socket);
                 this.stompClient.connect(

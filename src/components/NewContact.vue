@@ -26,14 +26,14 @@
         methods: {
             newContact() {
                 if (this.newEmail !== "") {
-                    axios.get("http://localhost:8082/userE/" + this.newEmail)
+                    axios.get("https://echo-servlet.herokuapp.com/userE/" + this.newEmail)
                         .then((response) => {
                             this.newUserId = response.data.id;
                         }).catch(() => {
 
                     }).then(() => {
                             console.log("creating new contact: " + this.userId + ", " + this.newUserId);
-                            axios.post("http://localhost:8082/contact", {
+                            axios.post("https://echo-servlet.herokuapp.com/contact", {
                                 user1Id: this.userId,
                                 user2Id: this.newUserId
                             }).then(() => {
