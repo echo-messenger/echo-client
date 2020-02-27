@@ -166,7 +166,7 @@
             getContacts() {
                 axios.get("https://echo-servlet.herokuapp.com/contacts/" + this.userId)
                     .then((response) => {
-                        // this.contacts = response.data;
+                        this.contacts = response.data;
                         this.$emit("success");
                         console.log(
                             "[Contacts.vue] retrieved contacts" + JSON.stringify(response.data)
