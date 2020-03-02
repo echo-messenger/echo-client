@@ -32,7 +32,7 @@
         }),
         methods: {
             getContacts() {
-                axios.get("https://echo-servlet.herokuapp.com/contacts/" + this.userId)
+                axios.get("http://localhost:8082/contacts/" + this.userId)
                     .then((response) => {
                         response.data.map(user => {
                             let name = user.firstName + " " + user.lastName;
@@ -60,7 +60,7 @@
                                 name += ", ";
                             }
                         }
-                        axios.post("https://echo-servlet.herokuapp.com/conversation", {
+                        axios.post("http://localhost:8082/conversation", {
                             name: name
                         }).then((response) => {
                             console.log(
@@ -99,7 +99,7 @@
             },
             doesConversationExist(users) {
                 users = users.map(user => user.value);
-                axios.post("https://echo-servlet.herokuapp.com/existing-conversation", {
+                axios.post("http://localhost:8082/existing-conversation", {
                     userIds: users,
                 }).then((response) => {
                     console.log(response.data);

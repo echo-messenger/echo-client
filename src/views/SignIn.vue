@@ -68,7 +68,7 @@
         }),
         methods: {
             checkEmailExists() {
-                axios.get("https://echo-servlet.herokuapp.com/userE/" + this.email)
+                axios.get("http://localhost:8082/userE/" + this.email.toLowerCase())
                     .then((res) => {
                         // console.log("res: " + JSON.stringify(res.data))
                         if (res.data === "") {
@@ -96,8 +96,8 @@
                 if (this.wrongEmail) return;
 
 
-                axios.post("https://echo-servlet.herokuapp.com/signin", {
-                    "email": this.email,
+                axios.post("http://localhost:8082/signin", {
+                    "email": this.email.toLowerCase(),
                     "plainPassword": this.password
                 }).then((response) => {
                     if (response.data !== "") {

@@ -10,10 +10,10 @@
                 <v-row align=center justify=center>
                     <v-col>
                         <v-row align=center justify=center>
-                            <v-btn v-if="!editPhotoF" outlined small v-on:click="editPhoto">Change Profile Picture
+                            <v-btn v-if="!editPhotoF" color="#f3b79a" small v-on:click="editPhoto">Change Profile Picture
                             </v-btn>
-                            <v-btn v-if="editPhotoF" outlined small v-on:click="savePhoto">Save Profile Picture</v-btn>
-                            <v-btn v-if="editPhotoF" outlined small v-on:click="cancelPhotoChange">cancel</v-btn>
+                            <v-btn v-if="editPhotoF" color="#f3b79a" small v-on:click="savePhoto">Save Profile Picture</v-btn>
+                            <v-btn v-if="editPhotoF" color="#f3b79a" small v-on:click="cancelPhotoChange">cancel</v-btn>
                         </v-row>
                         <v-row align=center justify=center>
                             <v-text-field v-if="editPhotoF" v-model="editedPhoto"></v-text-field>
@@ -31,8 +31,8 @@
                         <v-text-field v-model="lastName"></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-btn v-if="!editNameF" outlined small v-on:click="editName">Edit</v-btn>
-                        <v-btn v-if="editNameF" outlined small v-on:click="saveName">Save</v-btn>
+                        <v-btn v-if="!editNameF" color="#f3b79a" small v-on:click="editName">Edit</v-btn>
+                        <v-btn v-if="editNameF" color="#f3b79a" small v-on:click="saveName">Save</v-btn>
                     </v-col>
                 </v-row>
                 <v-row align=center justify=space-around>
@@ -42,8 +42,8 @@
                         <v-text-field v-if="editEmailF" v-model="email"></v-text-field>
                     </v-col>
                     <v-col>
-                        <v-btn v-if="!editEmailF" outlined small v-on:click="editEmail">Edit</v-btn>
-                        <v-btn v-if="editEmailF" outlined small v-on:click="saveEmail">Save</v-btn>
+                        <v-btn v-if="!editEmailF" color="#f3b79a" small v-on:click="editEmail">Edit</v-btn>
+                        <v-btn v-if="editEmailF" color="#f3b79a" small v-on:click="saveEmail">Save</v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -73,7 +73,7 @@
             getUser() {
                 let userId = this.$cookies.get('userId');
                 axios
-                    .get("https://echo-servlet.herokuapp.com/user/" + userId)
+                    .get("http://localhost:8082/user/" + userId)
                     .then((response) => {
                         this.user = response.data;
                         this.firstName = this.user.firstName;
@@ -88,8 +88,7 @@
                     });
             },
             savePhoto() {
-                this.editName();
-                axios.put("https://echo-servlet.herokuapp.com/user/" + this.user.id, {
+                axios.put("http://localhost:8082/user/" + this.user.id, {
                     "userId": this.user.id,
                     "firstName": this.firstName,
                     "lastName": this.lastName,
@@ -108,7 +107,7 @@
             },
             saveName() {
                 this.editName();
-                axios.put("https://echo-servlet.herokuapp.com/user/" + this.user.id, {
+                axios.put("http://localhost:8082/user/" + this.user.id, {
                     "userId": this.user.id,
                     "firstName": this.firstName,
                     "lastName": this.lastName,
@@ -126,7 +125,7 @@
             },
             saveEmail() {
                 this.editEmail();
-                axios.put("https://echo-servlet.herokuapp.com/user/" + this.user.id, {
+                axios.put("http://localhost:8082/user/" + this.user.id, {
                     userId: this.user.id,
                     firstName: this.user.firstName,
                     lastName: this.user.lastName,
