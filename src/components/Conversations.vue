@@ -17,21 +17,29 @@
                     </v-col>
                 </v-row>
                 <div class="conversation-list">
-                    <v-row v-for="(conv, index) in inbox" v-bind:key="index">
+                    <div v-if="!loaded" class="text-center">
+                        <v-progress-circular
+                                indeterminate
+                                color=#f3b79a
+                        ></v-progress-circular>
+                    </div>
+                    <v-row v-else v-for="(conv, index) in inbox" v-bind:key="index">
                         <v-list-item v-if="currentConversation === conv.conversationId"
                                      class="current-selection conv-list-item"
                                      v-on:click="changeConversation(conv.conversationId)">
                             <v-list-item-content>
                                 <v-list-item-title v-if="conv.name.length < 20">{{ conv.name }}</v-list-item-title>
                                 <v-list-item-title v-else>{{ conv.name.substring(0,20)+"..." }}</v-list-item-title>
-                                <p class="prev">{{conv.lastSender}}: {{conv.lastMessage}} -- {{getDate(conv.timestamp)}}</p>
+                                <p v-if="conv.timestamp !== 0" class="prev">{{conv.lastSender}}: {{conv.lastMessage}} --
+                                    {{getDate(conv.timestamp)}}</p>
                             </v-list-item-content>
                         </v-list-item>
                         <v-list-item v-else class="conv-list-item" v-on:click="changeConversation(conv.conversationId)">
                             <v-list-item-content>
                                 <v-list-item-title v-if="conv.name.length < 20">{{ conv.name }}</v-list-item-title>
                                 <v-list-item-title v-else>{{ conv.name.substring(0,20)+"..." }}</v-list-item-title>
-                                <p class="prev">{{conv.lastSender}}: {{conv.lastMessage}} -- {{getDate(conv.timestamp)}}</p>
+                                <p v-if="conv.timestamp !== 0" class="prev">{{conv.lastSender}}: {{conv.lastMessage}} --
+                                    {{getDate(conv.timestamp)}}</p>
                             </v-list-item-content>
                         </v-list-item>
                     </v-row>
@@ -55,10 +63,17 @@
         data: () => ({
             inbox: [],
             userId: "",
-            currentConversation: ""
+            currentConversation: "",
+            loaded: false
         }),
         methods: {
             getDate(date) {
+                if (Date.now() - date > 604800000) {
+                    return moment(date).calendar()
+                }
+                if (Date.now() - date > 86400000) {
+                    return moment(date).format('dddd')
+                }
                 return moment(date).format("hh:mm");
             },
             getInbox() {
@@ -67,6 +82,7 @@
                         console.log(response.data)
                         this.inbox = response.data;
                         this.$emit("success");
+                        this.loaded = true;
                     })
                     .catch(() => {
                     });

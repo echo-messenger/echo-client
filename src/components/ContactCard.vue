@@ -13,11 +13,11 @@
                 <v-row align=center justify=space-around>
                     <v-col>Email: {{contact.email}}</v-col>
                 </v-row>
-                <v-row>
-                    <v-btn v-if="userId !== currentContact"
-                           color="#f3b79a" small
-                           v-on:click="goToMessages(contact.id)">Message {{contact.firstName}}</v-btn>
-                </v-row>
+<!--                <v-row>-->
+<!--                    <v-btn v-if="userId !== currentContact"-->
+<!--                           color="#f3b79a" small-->
+<!--                           v-on:click="goToMessages(contact.id)">Message {{contact.firstName}}</v-btn>-->
+<!--                </v-row>-->
             </v-col>
         </v-card>
     </v-container>

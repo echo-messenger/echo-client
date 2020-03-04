@@ -42,15 +42,17 @@
                     </div>
                     <div v-else>
                         <div class="yours">
+                            <div class="time">{{message.senderName}}</div>
                             <div class="box-text">{{message.messageContent}}</div>
                             <div class="time">{{getDate(message.timestamp)}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="chat-input-form">
-                    <input v-model="message" class="chat-input">
+                    <input v-on:keyup.enter="send" v-model="message" class="chat-input">
+
                     <button v-on:click="send">
-                        <v-icon>mdi-arrow-up-circle-outline</v-icon>
+                        <v-icon style="color: black">mdi-arrow-up-circle-outline</v-icon>
                     </button>
                 </div>
             </div>
@@ -134,8 +136,8 @@
                         this.stompClient.subscribe("/topic/greetings", tick => {
                             let newMessage = JSON.parse(tick.body);
                             if (newMessage.conversationId === this.conversationId) {
-                                console.log(newMessage)
                                 this.messages.push(newMessage);
+                                this.$root.$emit('conversation updated');
                             }
                         });
                     },
@@ -146,6 +148,12 @@
                 );
             },
             getDate(date) {
+                if (Date.now() - date > 604800000) {
+                    return moment(date).calendar()
+                }
+                if (Date.now() - date > 86400000) {
+                    return moment(date).format('dddd')
+                }
                 return moment(date).format("hh:mm");
             },
         },
@@ -203,6 +211,7 @@
     }
 
     .yours {
+        padding-top: 15px;
         text-align: left;
     }
 
@@ -211,6 +220,7 @@
     }
 
     .mine {
+        padding-top: 15px;
         text-align: right;
     }
 
@@ -235,7 +245,7 @@
     }
 
     .mine .box-text {
-        background: lightblue;
+        background: #A7CFE8;
         display: inline-block;
         padding: 20px 15px;
         padding-right: 50px;
@@ -265,9 +275,9 @@
     }
 
     .chat-input {
-        /*width: 100%;*/
+        width: 500px;
         background: #FFFFFF;
-        border: none;
+        border: 1px solid black;
         outline: none;
         resize: none;
         border-radius: 0 0 6px 0;
@@ -281,9 +291,9 @@
     }
 
     .chat-input-form {
+        display: flex;
         width: 100%;
         background: #FFFFFF;
-        display: flex;
         box-shadow: 0px -1px 0px rgba(189, 204, 215, 0.544362);
         bottom: 0;
         position: fixed;
